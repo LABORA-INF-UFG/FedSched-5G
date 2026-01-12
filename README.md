@@ -1,4 +1,4 @@
-# Aprendizado Federado em Redes 5G: Algoritmo de Escalonamento de Recursos para o Treinamento Federado Baseado no Módulo 5G-LENA do ns-3
+# Escalonamento de Recursos de Rádio para Suporte ao Aprendizado Federado em Redes 5G
 Este trabalho propõe um algoritmo de escalonamento, denominado FedSched (*Federated Learning-Aware Resource Scheduler*), voltado para tarefas de Aprendizado Federado em redes 5G, onde os fluxos de atualização de modelo competem com tráfego de fundo concorrente não prioritário. O algoritmo seleciona dispositivos com dados mais representativos e com melhores condições de canal, emprega uma heurística de agendamento que prioriza os fluxos de atualização de modelo com coexistência de tráfego de fundo e aplica uma estratégia de agregação que reforça as contribuições que favorecem a convergência do modelo global. A implementação é integrada ao módulo 5G-LENA do ns-3 e demonstra melhorias na convergência e nos indicadores de desempenho da rede 5G, superando os algoritmos tradicionais de escalonamento.
 
 ---
