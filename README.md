@@ -3,7 +3,7 @@ Este trabalho propõe um algoritmo de escalonamento, denominado FedSched (*Feder
 
 ---
 
-## 🎯 Contribuições
+# 🎯 Contribuições
  
 - **Integração com Módulo 5G-LENA do ns-3:**  
 FedSched estende o escalonador OFDMA do módulo 5G-LENA do ns-3 sem alterar sua arquitetura.
@@ -25,3 +25,205 @@ FedSched introduz a classe GlobalMetrics, uma instância única que registra as 
 
 - **Disponibilização da Implementação:** 
 O código de FedSched é disponibilizado, permitindo a reprodução dos experimentos, a validação dos resultados e o uso como base para estudos e extensões futuras.
+
+
+# Estrutura do readme.md
+
+O repositório está organizado em quatro diretórios:
+
+- **ds:** Responsável pela geração do dataset utilizado nos experimentos.
+
+- **nr:** Contém as modificações no módulo 5G-LENA, incluindo a implementação do escalonador Fed-Sched.
+
+- **ns3-ai-fl:** Realiza a simulação de rede no ns-3 e gera métricas da simulação de rede.
+
+- **FL:** Executa a simulação do FL com base nas métricas obtidas na rede.
+
+# Selos Considerados
+
+- Artefatos Disponíveis (SeloD)  
+- Artefatos Funcionais (SeloF)
+- Artefatos Sustentáveis (SeloS)  
+- Experimentos Reprodutíveis (SeloR)
+  
+Com base nos códigos e documentação disponibilizados neste e nos repositórios relacionados.
+
+# Dependências
+Esta seção descreve os requisitos necessários para execução do projeto.
+
+## Requisitos
+
+- Ubuntu 20.04
+- Python 3.10
+- Conda
+- ns-3.44  
+- 5G-LENA v4.0 
+- ns3-ai 
+- 8GB RAM
+
+# Preocupações com segurança
+A execução deste artefato é isenta de riscos para os avaliadores. Não há necessidade de operações que possam comprometer o sistema.
+
+# Instalação
+
+## Geração do Dataset
+
+Antes da simulação, gere os dados locais dos clientes. Para o dataset MNIST, utilize:
+```bash
+cd FedSched-5G/ds
+python generate_dataset.py --dataset_name mnist --num_clients 150
+```
+Para o Fashion-MNIST, utilize o parâmetro fashion_mnist:
+```bash
+cd FedSched-5G/ds
+python generate_dataset.py --dataset_name fashion_mnist --num_clients 150
+```
+
+
+## NR ns-3 module
+Para verificar as dependências necessárias, requisitos de compilação e instruções adicionais de instalação do módulo 5G-LENA, consulte a documentação oficial em: https://github.com/QiuYukang/5G-LENA/tree/5g-lena-v4.0.y
+
+### ns-3
+Faça o download do simulador ns-3 a partir do repositório oficial e selecione a versão 3.44, utilizada neste projeto.
+
+```bash
+git clone https://gitlab.com/nsnam/ns-3-dev.git
+cd ns-3-dev
+git checkout -b ns-3.44 ns-3.44
+```
+
+### 5G-LENA
+Adicione o módulo 5G-LENA ao diretório contrib do ns-3, utilizando a versão v4.0.
+
+```bash
+cd ns3_directory/contrib
+git clone https://gitlab.com/cttc-lena/nr.git
+cd nr
+git checkout -b 5g-lena-v4.0.y origin/5g-lena-v4.0.y
+```
+
+No diretório `ns-3-dev`, compile o ambiente e execute um exemplo para validar a instalação.
+
+```bash
+cd ns3_directory
+./ns3 configure --enable-examples --enable-tests
+./ns3 build
+./ns3 run cttc-nr-demo
+```
+
+## ns3-ai module
+Para verificar as dependências necessárias, requisitos de compilação e instruções adicionais de instalação do módulo ns3-ai, consulte a documentação oficial em: https://github.com/hust-diangroup/ns3-ai/blob/main/docs/install.md
+
+### ns3-ai
+Crie um ambiente virtual Conda dedicado ao ns3-ai.
+```bash
+conda create -n ns3ai_env python=3.10 tensorflow==2.10.0 -y
+conda activate ns3ai_env
+pip install pandas matplotlib POT
+```
+
+Adicione o módulo ns3-ai ao diretório contrib do ns-3.
+```bash
+cd ns3_directory
+git clone https://github.com/hust-diangroup/ns3-ai.git contrib/ai
+```
+
+Construa a biblioteca `ai` e configurare as interfaces Python.
+```bash
+./ns3 configure --enable-examples -- -DPython_EXECUTABLE=<path-to-python> -DPython3_EXECUTABLE=<path-to-python>
+./ns3 build ai
+pip install -e contrib/ai/python_utils
+pip install -e contrib/ai/model/gym-interface/py
+```
+
+# Integração do Projeto
+Para que o Fed-Sched funcione corretamente, é necessário integrar os arquivos deste repositório ao módulo NR do ns-3.
+
+Os arquivos deste repositório devem modificar o módulo 5G-LENA.
+```bash
+cp -r FedSched-5G/nr/model/* ns3_directory/contrib/nr/model/
+cp -r FedSched-5G/nr/helper/* ns3_directory/contrib/nr/helper/
+```
+
+O diretório  `ns3-ai-fl ` contém o cenário e as aplicações de simulação e deve ser copiado para o diretório de exemplos do ns3-ai.
+```bash
+mkdir -p ns-3-dev/contrib/ai/examples/ns3-ai-fl
+cp -r FedSched-5G/ns3-ai-fl/* ns3_directory/contrib/ai/examples/ns3-ai-fl/
+```
+
+Antes de executar os experimentos, é necessário criar o diretório `fl-results/`, que armazenará os resultados organizados por seed e por scheduler, conforme o exemplo abaixo.
+```bash
+mkdir -p ns3_directory/fl-results/seed1/{FL,RR,MR,PF}
+mkdir -p ns3_directory/fl-results/seed-avg
+```
+
+# Teste Mínimo
+
+O teste mínimo da simulação de rede no `ns3` utilizando o escalonador `RR`. Espera-se que a simulação seja executada sem erros e que os arquivos de saída sejam gerados em `ns3_directory/fl-results/seed1/RR`.
+
+```bash 
+conda activate ns3ai_env
+cd ns3_directory/contrib/ai/examples/ns3-ai-fl
+python ./run.py --scheduler=RR --nRounds=5 --seed=1
+```
+
+# Experimentos
+
+## Reivindicação #1: Simulação de Rede ##
+
+Esta etapa executa a simulação de rede no ns-3 utilizando o escalonador Fed-Sched. Outros parâmetros adicionais da simulação de rede  podem ser ajustados diretamente no arquivo `sim.cc`.
+
+```bash
+conda activate ns3ai_env
+cd ns3_directory/contrib/ai/examples/ns3-ai-fl
+python ./run.py \
+  --ueNum=150 \
+  --kPerRound=6 \
+  --scheduler=FL \
+  --nRounds=100 \
+  --roundWindow=5 \
+  --trainDelay=0.5 \
+  --payloadBytes=407080 \
+  --enableExtraApp=1 \
+  --seed=1
+```
+
+- `--ueNum`: número total de dispositivos (UEs) na simulação.
+- `--kPerRound`: número de UEs selecionados por rodada de FL.
+- `--scheduler`: escalonador utilizado (FL, RR, PF ou MR).
+- `--nRounds`: número total de rodadas de FL.
+- `--roundWindow`: duração (em segundos) de cada rodada.
+- `--trainDelay`: tempo de processamento local do modelo em cada UE.
+- `--payloadBytes`: tamanho do modelo transmitido em bytes.
+- `--enableExtraApp`: habilita tráfego adicional concorrente na rede.
+- `--seed`: semente aleatória para reprodutibilidade.
+
+
+## Reivindicação #2: Simulação de FL ##
+
+Esta etapa executa a simulação de FL utilizando os resultados gerados pela simulação de rede.
+
+```bash
+conda activate ns3ai_env
+cd ns3_directory/contrib/ai/examples/ns3-ai-fl
+python run.py \
+  --scheduler FL \
+  --n_seed=1 \
+  --n_clients 150 \
+  --n_rounds 100 \
+  --model_type MLP \
+  --path_clients ./ds_directory/mnist \
+  --path_server ./ds_directory/mnist/mnist \
+  --path_fl_results ./ns3_directory/contrib/ai/examples/ns3-ai-fl
+```
+- `--scheduler`: escalonador utilizado (FL, RR, PF ou MR), que define quais UEs participam de cada rodada.
+- `--n_seed`: número de seeds utilizadas na simulação de rede.
+- `--n_clients`: número total UEs no treinamento federado.
+- `--n_rounds`: número de rodadas de treinamento federado.
+- `--model_type`: tipo de modelo utilizado (ex: MLP ou CNN).
+- `--path_clients`: caminho para os dados locais dos clientes.
+- `--path_server`: caminho para o dataset global utilizado na avaliação.
+- `--path_fl_results`: caminho onde estão os resultados da simulação de rede.
+
+# LICENSE
+Este projeto está licenciado sob a licença Creative Commons Attribution 4.0 International (CC BY 4.0).
