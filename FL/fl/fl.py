@@ -8,7 +8,7 @@ from ml_model.ml_model import Model
 
 
 class FL:
-    def __init__(self, scheduler, n_seed, n_clients, n_rounds, model_type, path_clients, path_server):
+    def __init__(self, scheduler, n_seed, n_clients, n_rounds, model_type, path_clients, path_server, path_fl_results):
         self.scheduler = scheduler
         self.n_seed = n_seed
         self.n_clients = n_clients
@@ -16,7 +16,7 @@ class FL:
         self.model_type = model_type
         self.path_clients = path_clients
         self.path_server = path_server
-
+        self.path_fl_results = path_fl_results
 
     def run(self):
 
@@ -33,7 +33,7 @@ class FL:
 
         print("-------------------")
 
-        output_file = f"../fl-results/seed-avg/{self.scheduler}/acc_results-{self.model_type}.txt"
+        output_file = f"{self.path_fl_results}/seed-avg/{self.scheduler}/acc_results-{self.model_type}.txt"
         with open(output_file, "w") as f:
             f.write(f"acc_mean:\n{np.mean(acc_list, axis=0).tolist()}\n\n")
             f.write(f"acc_std:\n{np.std(acc_list, axis=0).tolist()}\n\n")
@@ -47,7 +47,10 @@ class FL:
 
 
     def run_seed(self, seed):
-        round_ids = self.success_ids(seed)   
+        round_ids = self.success_ids(seed)
+        # print(len(round_ids))
+        # print(round_ids)
+        # sys.exit()
         s = Server(self.n_rounds, self.n_clients, self.scheduler, self.model_type, self.path_clients, self.path_server)
 
         accuracy = []
@@ -73,13 +76,13 @@ class FL:
 
 
     def success_ids(self, seed):
-        file_path = f"../fl-results/seed{seed}/{self.scheduler}/successIds.csv"
+        file_path = f"{self.path_fl_results}/seed{seed}/{self.scheduler}/successIds.csv"
         df = pd.read_csv(file_path, sep=",")
         df = df.dropna(axis=1, how="all")
 
         round_dict = {}
         for r in range(1, self.n_rounds+1):
-            if r in df.iloc[:, 0].values:  
+            if r in df.iloc[:, 0].values:  # primeira coluna é round
                 row = df[df.iloc[:, 0] == r].iloc[0]
                 ids = []
                 for val in row.iloc[1:].dropna().astype(str).values:
@@ -87,6 +90,7 @@ class FL:
                         if v.strip().isdigit():
                             ids.append(int(v))
                 round_dict[r] = ids
-            else:                
+            else:
+                # round ausente no CSV → cria lista vazia
                 round_dict[r] = []
         return round_dict
