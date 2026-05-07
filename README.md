@@ -39,6 +39,22 @@ O repositório está organizado em quatro diretórios:
 
 - **FL:** Executa a simulação do FL com base nas métricas obtidas na rede.
 
+# Fluxo Completo de Execução
+
+A reprodução completa do artigo segue a sequência abaixo:
+
+1. Clonagem do repositório principal;
+2. Instalação do ns-3.44;
+3. Instalação do módulo 5G-LENA v4.0;
+4. Instalação do módulo ns3-ai;
+5. Integração dos arquivos do FedSched ao ns-3;
+6. Geração dos datasets locais dos clientes;
+7. Compilação do ambiente ns-3;
+8. Execução do teste mínimo;
+9. Execução da simulação de rede;
+10. Execução do treinamento federado;
+11. Análise dos resultados gerados em `fl-results/`.
+
 # Selos Considerados
 
 - Artefatos Disponíveis (SeloD)  
@@ -47,6 +63,15 @@ O repositório está organizado em quatro diretórios:
 - Experimentos Reprodutíveis (SeloR)
   
 Com base nos códigos e documentação disponibilizados neste e nos repositórios relacionados.
+
+# Obtenção do Código-Fonte
+
+Clone o repositório principal do projeto:
+
+```bash
+git clone https://github.com/LABORA-INF-UFG/FedSched-5G.git
+cd FedSched-5G
+```
 
 # Dependências
 Esta seção descreve os requisitos necessários para execução do projeto.
