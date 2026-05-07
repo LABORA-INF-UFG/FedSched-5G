@@ -96,7 +96,7 @@ Ao final da execução completa do fluxo experimental, espera-se que o diretóri
 
 ```text
 fl-results/
-├── seed1/
+├── seed<id>/
 │   ├── FL/
 │   ├── RR/
 │   ├── PF/
@@ -242,7 +242,7 @@ python ./run.py \
   --nRounds=100 \
   --roundWindow=5 \
   --trainDelay=0.5 \
-  --payloadBytes=407080 \
+  --payloadBytes=681892 \
   --enableExtraApp=1 \
   --seed=1
 ```
