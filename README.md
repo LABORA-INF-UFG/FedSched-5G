@@ -54,37 +54,35 @@ Esta seção descreve os requisitos necessários para execução do projeto.
 ## Requisitos
 
 - Sistema Operacional: Ubuntu 20.04 LTS
-- Kernel Linux: 5.x
-- Processador: Intel Core i7
+- Processador: Intel Core i7 ou equivalente
 - Memória RAM: mínimo de 8 GB
-- GCC/G++: 11.4.0
+- GCC/G++ 11.4.0
 - Python: 3.10
 - Conda
 - ns-3: versão 3.44  
 - 5G-LENA: branch `5g-lena-v4.0.y`
 - ns3-ai
   
-As principais bibliotecas utilizadas no ambiente experimental incluem:
+As principais bibliotecas utilizadas incluem:
 
 - `tensorflow==2.10.0`
 - `keras==3.13.1`
-- `tensorboard==2.20.0`
-- `protobuf==3.20.3`
 - `gym==0.26.2`
 - `gymnasium==1.2.3`
 - `numpy==1.26.4`
 - `pandas==3.0.0`
+- `scipy==1.15.3`
+- `POT==0.9.6.post1`
 - `matplotlib==3.10.8`
-  
-O ambiente experimental do ns-3 e do módulo 5G-LENA depende das seguintes ferramentas e bibliotecas:
+- `protobuf==3.20.3`
+- `pybind11==2.10.4`
+- `tqdm==4.67.1`
+- `zeromq==4.3.5`
+- `libstdcxx==15.2.0`
+- `libgcc==15.2.0`
+- `zlib==1.3.1`
 
-- GCC/G++ 11.4.0
-- Bibliotecas padrão do ns-3.44
-- Bibliotecas do módulo 5G-LENA v4.0
-- Integração C++/Python do ns3-ai
-
-
-## Ambiente Experimental
+Demais dependências necessárias para compilação e execução do ambiente de simulação estão descritas nas etapas de instalação do ns-3, do módulo 5G-LENA e do módulo ns3-ai, conforme indicado em suas respectivas documentações oficiais de instalação.
 
 # Preocupações com segurança
 A execução deste artefato é isenta de riscos para os avaliadores. Não há necessidade de operações que possam comprometer o sistema.
