@@ -39,22 +39,6 @@ O repositório está organizado em quatro diretórios:
 
 - **FL:** Executa a simulação do FL com base nas métricas obtidas na rede.
 
-# Fluxo Completo de Execução
-
-A reprodução completa do artigo segue a sequência abaixo:
-
-1. Clonagem do repositório principal;
-2. Instalação do ns-3.44;
-3. Instalação do módulo 5G-LENA v4.0;
-4. Instalação do módulo ns3-ai;
-5. Integração dos arquivos do FedSched ao ns-3;
-6. Geração dos datasets locais dos clientes;
-7. Compilação do ambiente ns-3;
-8. Execução do teste mínimo;
-9. Execução da simulação de rede;
-10. Execução do treinamento federado;
-11. Análise dos resultados gerados em `fl-results/`.
-
 # Selos Considerados
 
 - Artefatos Disponíveis (SeloD)  
@@ -79,6 +63,46 @@ Esta seção descreve os requisitos necessários para execução do projeto.
 
 # Preocupações com segurança
 A execução deste artefato é isenta de riscos para os avaliadores. Não há necessidade de operações que possam comprometer o sistema.
+
+# Guia de Reprodução
+
+Esta seção apresenta um roteiro linear, autocontido e reproduzível para execução completa do artefato experimental do FedSched. Todos os passos devem ser executados na sequência indicada abaixo.
+
+## Fluxo de Reprodução
+
+A reprodução completa do artigo segue a sequência abaixo:
+
+1. Clonagem do repositório principal;
+2. Instalação do ns-3.44;
+3. Instalação do módulo 5G-LENA v4.0;
+4. Instalação do módulo ns3-ai;
+5. Integração dos arquivos do FedSched ao ns-3;
+6. Geração dos datasets locais dos clientes;
+7. Compilação do ambiente ns-3;
+8. Execução do teste mínimo;
+9. Execução da simulação de rede;
+10. Execução do treinamento federado;
+11. Análise dos resultados gerados em `fl-results/`.
+
+## Observações de Reprodutibilidade
+
+A reprodução completa dos experimentos depende da execução correta de todas as etapas de instalação descritas neste README, incluindo: obtenção do código-fonte, geração do dataset, instalação do ns-3, instalação dos módulos 5G-LENA e ns3-ai, bem como a integração do projeto FedSched ao ambiente de simulação.
+
+Em especial, os procedimentos de instalação do ns-3, do módulo 5G-LENA e do módulo ns3-ai seguem as instruções descritas em suas respectivas documentações oficiais, referenciadas nas seções correspondentes deste README.
+
+## Resultado Esperado
+
+Ao final da execução completa do fluxo experimental, espera-se que o diretório `fl-results/` contenha:
+
+```text
+fl-results/
+├── seed1/
+│   ├── FL/
+│   ├── RR/
+│   ├── PF/
+│   └── MR/
+└── seed-avg/
+```
 
 # Instalação
 
