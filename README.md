@@ -53,13 +53,38 @@ Esta seção descreve os requisitos necessários para execução do projeto.
 
 ## Requisitos
 
-- Ubuntu 20.04
-- Python 3.10
+- Sistema Operacional: Ubuntu 20.04 LTS
+- Kernel Linux: 5.x
+- Processador: Intel Core i7
+- Memória RAM: mínimo de 8 GB
+- GCC/G++: 11.4.0
+- Python: 3.10
 - Conda
-- ns-3.44  
-- 5G-LENA v4.0 
-- ns3-ai 
-- 8GB RAM
+- ns-3: versão 3.44  
+- 5G-LENA: branch `5g-lena-v4.0.y`
+- ns3-ai
+  
+As principais bibliotecas utilizadas no ambiente experimental incluem:
+
+- `tensorflow==2.10.0`
+- `keras==3.13.1`
+- `tensorboard==2.20.0`
+- `protobuf==3.20.3`
+- `gym==0.26.2`
+- `gymnasium==1.2.3`
+- `numpy==1.26.4`
+- `pandas==3.0.0`
+- `matplotlib==3.10.8`
+  
+O ambiente experimental do ns-3 e do módulo 5G-LENA depende das seguintes ferramentas e bibliotecas:
+
+- GCC/G++ 11.4.0
+- Bibliotecas padrão do ns-3.44
+- Bibliotecas do módulo 5G-LENA v4.0
+- Integração C++/Python do ns3-ai
+
+
+## Ambiente Experimental
 
 # Preocupações com segurança
 A execução deste artefato é isenta de riscos para os avaliadores. Não há necessidade de operações que possam comprometer o sistema.
@@ -73,8 +98,8 @@ Esta seção apresenta um roteiro linear, autocontido e reproduzível para execu
 A reprodução completa do artigo segue a sequência abaixo:
 
 1. Clonagem do repositório principal;
-2. Instalação do ns-3.44;
-3. Instalação do módulo 5G-LENA v4.0;
+2. Instalação do ns-3;
+3. Instalação do módulo 5G-LENA;
 4. Instalação do módulo ns3-ai;
 5. Integração dos arquivos do FedSched ao ns-3;
 6. Geração dos datasets locais dos clientes;
