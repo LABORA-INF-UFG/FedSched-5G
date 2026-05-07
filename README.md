@@ -64,15 +64,6 @@ A reprodução completa do artigo segue a sequência abaixo:
   
 Com base nos códigos e documentação disponibilizados neste e nos repositórios relacionados.
 
-# Obtenção do Código-Fonte
-
-Clone o repositório principal do projeto:
-
-```bash
-git clone https://github.com/LABORA-INF-UFG/FedSched-5G.git
-cd FedSched-5G
-```
-
 # Dependências
 Esta seção descreve os requisitos necessários para execução do projeto.
 
@@ -90,6 +81,15 @@ Esta seção descreve os requisitos necessários para execução do projeto.
 A execução deste artefato é isenta de riscos para os avaliadores. Não há necessidade de operações que possam comprometer o sistema.
 
 # Instalação
+
+## Obtenção do Código-Fonte
+
+Clone o repositório principal do projeto:
+
+```bash
+git clone https://github.com/LABORA-INF-UFG/FedSched-5G.git
+cd FedSched-5G
+```
 
 ## Geração do Dataset
 
