@@ -218,6 +218,16 @@ python ./run.py --scheduler=RR --nRounds=5 --seed=1
 
 # Experimentos
 
+## Parâmetros na Reprodutibilidade dos Resultados
+
+Os resultados obtidos pelo FedSched dependem diretamente da configuração dos parâmetros da simulação de rede e do treinamento federado. Pequenas alterações nesses parâmetros podem modificar o comportamento do escalonador, a coexistência entre os fluxos de rede e a convergência do modelo global.
+
+No ambiente de rede, parâmetros como número de UEs (`--ueNum`), quantidade de dispositivos selecionados por rodada (`--kPerRound`), duração da janela de comunicação (`--roundWindow`), atraso de treinamento local (`--trainDelay`) e tamanho do modelo transmitido (`--payloadBytes`) influenciam diretamente o uso de recursos de rádio, throughput, atraso, taxa de entrega e quantidade de atualizações FL concluídas com sucesso.
+
+Da mesma forma, a ativação de tráfego concorrente (`--enableExtraApp`) altera o nível de contenção no uplink, impactando o comportamento relativo entre os escalonadores RR, PF, MR e FedSched. Assim, diferentes cargas de tráfego podem produzir diferenças significativas nos indicadores de QoS e na taxa de sucesso das rodadas de Aprendizado Federado.
+
+No treinamento federado, parâmetros como número de rodadas (`--nRounds`), quantidade de clientes, tipo de modelo (`MLP` ou `CNN`) e distribuição dos dados locais também influenciam diretamente a convergência e a estabilidade do modelo global.
+
 ## Reivindicação #1: Simulação de Rede ##
 
 Esta etapa executa a simulação de rede no ns-3 utilizando o escalonador Fed-Sched. Outros parâmetros adicionais da simulação de rede  podem ser ajustados diretamente no arquivo `sim.cc`.
